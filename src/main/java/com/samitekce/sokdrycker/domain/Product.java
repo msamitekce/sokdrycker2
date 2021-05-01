@@ -4,13 +4,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Product {
@@ -22,11 +19,10 @@ public class Product {
 
 	private double sugar;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JsonManagedReference
+	@ManyToMany
 	@JoinTable(name = "products_have", joinColumns = {
-			@JoinColumn(name = "product_ean", referencedColumnName = "ean", nullable = false, updatable = false) }, inverseJoinColumns = {
-					@JoinColumn(name = "ecode_code", referencedColumnName = "code", nullable = false, updatable = false) })
+			@JoinColumn(name = "product_ean", referencedColumnName = "ean") }, inverseJoinColumns = {
+					@JoinColumn(name = "ecode_code", referencedColumnName = "code") })
 	private Set<Ecode> keepsEcodes = new HashSet<Ecode>(0);
 
 	public Product() {

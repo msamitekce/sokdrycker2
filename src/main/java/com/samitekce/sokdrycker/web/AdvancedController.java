@@ -3,6 +3,7 @@ package com.samitekce.sokdrycker.web;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,10 +41,13 @@ public class AdvancedController {
 		return userRepo.findAll();
 	}
 
-	// username, passwordHash, email, role, apikey, userStatus
+	// username, passwordHash, email
 	@PostMapping(value = "/user")
 	@ResponseBody
 	public User addUser(@RequestBody User user) {
+		user.setApikey();
+		user.setRole("INACTIVE");
+		user.setUserStatus("IDK");
 		userRepo.save(user);
 		return user;
 	}
@@ -52,6 +56,11 @@ public class AdvancedController {
 	public String deleteUserById(@PathVariable("id") Long id) {
 		userRepo.deleteById(id);
 		return id + " deleted!";
+	}
+	
+	@GetMapping(value = "/user/{id}")
+	public User getUserById(@PathVariable("id") Long id) {
+		return userRepo.findById(id).get();
 	}
 
 	// Ecode Management
@@ -86,9 +95,19 @@ public class AdvancedController {
 	}
 
 	@DeleteMapping(value = "/product/{ean}")
+	@Transactional
 	public String deleteProductByEan(@PathVariable("ean") String ean) {
 		productRepo.deleteByEan(ean);
 		return ean + " deleted!";
 	}
 
+	// ean, name, sugar (double),
+	// keepsEcodes (array of objects [{ "code": "__CODE__" }]
+	@PostMapping(value = "/product")
+	@ResponseBody
+	public List<Product> postProduct(@RequestBody Product product) {
+		productRepo.save(product);
+		return productRepo.findByEan(product.getEan());
+	}
+	
 }
