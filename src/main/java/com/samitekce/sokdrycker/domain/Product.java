@@ -23,7 +23,7 @@ public class Product {
 	private double sugar;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JsonManagedReference(value="idk")
+	@JsonManagedReference
 	@JoinTable(name = "products_have", joinColumns = {
 			@JoinColumn(name = "product_ean", referencedColumnName = "ean", nullable = false, updatable = false) }, inverseJoinColumns = {
 					@JoinColumn(name = "ecode_code", referencedColumnName = "code", nullable = false, updatable = false) })
