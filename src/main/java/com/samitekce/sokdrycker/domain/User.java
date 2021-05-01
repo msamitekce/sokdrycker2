@@ -33,19 +33,21 @@ public class User {
 	@Column(name = "apikey", nullable = true, unique = true)
 	private String apikey;
 
+	@Column(name = "status", nullable = false)
+	private String userStatus;
+
 	public User() {
 
 	}
 
-	public User(String username, String passwordHash, String email, String role, String apikey) {
+	public User(String username, String passwordHash, String email, String role, String apikey, String userStatus) {
 		super();
 		this.username = username;
 		this.passwordHash = passwordHash;
 		this.email = email;
 		this.role = role;
-		this.apikey = new Random().ints(97, 123).limit(10)
-				.collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append).toString();
-		;
+		this.apikey = "";
+		this.userStatus = "INACTIVE";
 	}
 
 	public Long getId() {
@@ -98,12 +100,18 @@ public class User {
 		;
 	}
 
+	public String getUserStatus() {
+		return userStatus;
+	}
+
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", passwordHash=" + passwordHash + ", email=" + email
-				+ ", role=" + role + ", apikey=" + apikey + "]";
+				+ ", role=" + role + ", apikey=" + apikey + ", userStatus=" + userStatus + "]";
 	}
 
-	
-	
 }
