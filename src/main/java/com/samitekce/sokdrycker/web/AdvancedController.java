@@ -40,6 +40,7 @@ public class AdvancedController {
 		return userRepo.findAll();
 	}
 
+	// username, passwordHash, email, role, apikey, userStatus
 	@PostMapping(value = "/user")
 	@ResponseBody
 	public User addUser(@RequestBody User user) {
