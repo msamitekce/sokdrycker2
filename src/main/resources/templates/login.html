@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Login page</title>
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+</head>
+<body>
+	<div class="row">
+
+		<div class="col s12 m12 l4 offset-l1">
+			<h2>Login</h2>
+			<p th:if="${loginError}" class="error">Wrong user or password</p>
+			<form th:action="@{/}" method="post">
+				<div class="input-field">
+
+					<input id="username" name="username" type="text" class="validate">
+					<label for="username">Username</label>
+				</div>
+				<div class="input-field">
+
+					<input id="password" name="password" type="password"> <label
+						for="password">Password</label>
+				</div>
+				<button class="btn-large waves-effect waves-light" type="submit">
+					Login <i class="material-icons right">chevron_right</i>
+				</button>
+				<a class="waves-effect waves-light btn-large">Forgot password?</a>
+			</form>
+		</div>
+		<div class="col s12 m12 l5 offset-l1">
+			<h4>Find any item by EAN number</h4>
+			<div class="input-field row">
+
+				<input class="col l10" id="searchEan" name="searchean" type="text">
+				<label for="searchean">EAN number</label> <a
+					class="waves-effect waves-light btn-large"> <i
+					id="searchButton" th:onclick="searchByEan()"
+					class="material-icons center">search</i></a>
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>Name</th>
+						<th>Sugar(g/100ml)</th>
+						<th>Ecodes</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr>
+						<td id="product_name"></td>
+						<td id="product_sugar"></td>
+						<td id="product_ecodes"></td>
+					</tr>
+				</tbody>
+			</table>
+			<h3>We have many other search functions. Sign up now for free!</h3>
+			<a class="btn" href="/register">Sign Up!</a>
+		</div>
+
+	</div>
+	<script type="text/javascript"> 
+
+		function searchByEan() {
+		    const ean = document.querySelector('#searchEan').value;
+
+		    fetch('http://localhost:8080/api/product?ean=' + ean)
+		        .then(response => response.json())
+		        .then(data => data[0])
+		        .then(obj => {
+            document.getElementById('product_name').innerText = obj.name;
+            document.getElementById('product_sugar').innerText = obj.sugar;
+            console.log(obj.keepsEcodes);
+			obj.keepsEcodes.forEach(ecode => {console.log(ecode.code)
+				let spanE = document.createElement('span');
+				spanE.innerText = ecode.code;
+				document.getElementById('product_ecodes').appendChild(spanE);
+				
+			
+			});     
+
+            console.log(obj.name);
+            console.log(obj.sugar);
+            })};
+
+		</script>
+</body>
+</html>

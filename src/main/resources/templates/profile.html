@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>SokDrycker | Look what you drink!</title>
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+</head>
+<body>
+	<div th:replace="fragments/general :: top_menu"></div>
+	<table class="container">
+		<tbody>
+			<tr>
+				<td>Username</td>
+				<td th:text="${loggedUser.username}"></td>
+			</tr>
+			<tr>
+				<td>Email</td>
+				<td th:text="${loggedUser.email}"></td>
+				<td><a class="btn" th:href="@{/profile/edit}">Edit</a></td>
+			</tr>
+			<tr>
+				<td>Api Key</td>
+				<td th:text="${loggedUser.apikey}"></td>
+				<td><a class="btn" th:href="@{/profile/apikey}">New Key</a></td>
+			</tr>
+			<tr>
+				<td><a class="btn" th:href="@{/profile/changepassword}">Change
+						Password</a></td>
+			</tr>
+		</tbody>
+	</table>
+
+</body>
+</html>

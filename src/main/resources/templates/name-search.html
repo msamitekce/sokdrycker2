@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>SokDrycker | Look what you drink!</title>
+<!-- Compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+<!-- Compiled and minified JavaScript -->
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+
+</head>
+<body>
+	<div th:replace="fragments/general :: top_menu"></div>
+	<div class="row">
+
+		<div class="col s12 m12 l4 offset-l1">
+			<h2>Search by product name</h2>
+			<form th:action="@{/search/name-search}" method="get">
+				<div class="input-field">
+
+					<input id="name" name="name" type="text" class="validate">
+					<label for="name">Name</label>
+				</div>
+
+				<button class="btn-large waves-effect waves-light" type="submit">
+					Search <i class="material-icons right">chevron_right</i>
+				</button>
+			</form>
+
+
+		</div>
+
+		<div class="col l4">
+			<table th:if="${not #lists.isEmpty(search)}" th:object="${search}">
+				<thead>
+					<tr>
+						<th>Ean</th>
+						<th>Name</th>
+						<th>Sugar(g/100ml)</th>
+						<th>Ecodes</th>
+					</tr>
+				</thead>
+
+				<tbody>
+					<tr th:each="product : ${search}">
+						<td th:text="${product.ean}"></td>
+						<td th:text="${product.name}"></td>
+						<td th:text="${product.sugar}"></td>
+						<td th:each="aCode : ${product.keepsEcodes}"><span
+							th:text="${aCode.code}"></span></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+
+</body>
+</html>
