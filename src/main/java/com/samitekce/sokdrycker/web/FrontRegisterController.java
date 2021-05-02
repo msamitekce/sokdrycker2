@@ -45,7 +45,7 @@ public class FrontRegisterController {
 		user.setRole("NOTVALID");
 		user.setApikey();
 		userRepo.save(user);
-		sendEmail("###", user);
+		sendEmail("msamitekce@gmail.com", user);
 		return "redirect:/";
 	}
 	
@@ -70,7 +70,7 @@ public class FrontRegisterController {
 	@Value("${app.email.port}")
 	private int SMTP_HOST_PORT;
 
-	@Value("${app.email.from}")
+	@Value("${app.email.from}") 
 	private String FROM;
 
 	public void sendEmail(String toMailAddress, User user) throws MessagingException {

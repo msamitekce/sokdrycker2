@@ -91,4 +91,11 @@ public class FrontSearchController {
 		}
 		return "ecode-search";
 	}
+	
+	// Get all products
+	@GetMapping(value = "/all")
+	public String displayAllProducts(Model model) {
+		model.addAttribute("products", productRepo.findAll());
+		return "all-products";
+	}
 }

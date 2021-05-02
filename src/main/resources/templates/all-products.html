@@ -1,7 +1,8 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>SokDrycker | Look what you drink!</title>
+<title>All Products</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <!-- Compiled and minified CSS -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -16,26 +17,10 @@
 <body>
 	<div th:replace="fragments/general :: top_menu"></div>
 	<div class="row">
+		<div class="col l8">
+			<h2>PRODUCTS</h2>
 
-		<div class="col s12 m12 l4 offset-l1">
-			<h2>Search by sugar</h2>
-			<form th:action="@{/search/sugar-search}" method="get">
-				<div class="input-field">
-
-					<input id="sugar" name="sugar" type="text" class="validate">
-					<label for="sugar">Amount of sugar (mg/100ml)</label>
-				</div>
-
-				<button class="btn-large waves-effect waves-light" type="submit">
-					Search <i class="material-icons right">chevron_right</i>
-				</button>
-			</form>
-
-
-		</div>
-
-		<div class="col l4">
-			<table th:if="${not #lists.isEmpty(search)}" th:object="${search}">
+			<table>
 				<thead>
 					<tr>
 						<th>EAN</th>
@@ -44,19 +29,18 @@
 						<th>Ecodes</th>
 					</tr>
 				</thead>
-
 				<tbody>
-					<tr th:each="product : ${search}">
+					<tr th:each="product : ${products}">
 						<td th:text="${product.ean}"></td>
 						<td th:text="${product.name}"></td>
 						<td th:text="${product.sugar}"></td>
-						<td th:each="aCode : ${product.keepsEcodes}"><span
-							th:text="${aCode.code}"></span></td>
+						<td><span th:each="keptCode : ${product.keepsEcodes}"
+							th:text="|${keptCode.code} |"></span></td>
+
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</div>
-
 </body>
 </html>
