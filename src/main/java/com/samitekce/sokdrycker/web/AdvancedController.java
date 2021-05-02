@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -34,7 +33,6 @@ public class AdvancedController {
 	@Autowired
 	private ProductRepository productRepo;
 
-	
 	// User Management
 	@GetMapping(value = "/user")
 	public List<User> findAllUsers() {
@@ -47,7 +45,6 @@ public class AdvancedController {
 	public User addUser(@RequestBody User user) {
 		user.setApikey();
 		user.setRole("INACTIVE");
-		user.setUserStatus("IDK");
 		userRepo.save(user);
 		return user;
 	}
@@ -57,7 +54,7 @@ public class AdvancedController {
 		userRepo.deleteById(id);
 		return id + " deleted!";
 	}
-	
+
 	@GetMapping(value = "/user/{id}")
 	public User getUserById(@PathVariable("id") Long id) {
 		return userRepo.findById(id).get();
@@ -109,5 +106,5 @@ public class AdvancedController {
 		productRepo.save(product);
 		return productRepo.findByEan(product.getEan());
 	}
-	
+
 }

@@ -12,15 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.samitekce.sokdrycker.domain.User;
-import com.samitekce.sokdrycker.repository.EcodeRepository;
 import com.samitekce.sokdrycker.repository.UserRepository;
 
 @Controller
 public class FrontProfileController {
 
 	BCryptPasswordEncoder password_hasher = new BCryptPasswordEncoder();
-	@Autowired
-	private EcodeRepository ecodeRepo;
 
 	@Autowired
 	private UserRepository userRepo;

@@ -9,10 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.samitekce.sokdrycker.domain.Ecode;
 import com.samitekce.sokdrycker.domain.Product;
-import com.samitekce.sokdrycker.domain.User;
-import com.samitekce.sokdrycker.repository.EcodeRepository;
 import com.samitekce.sokdrycker.repository.ProductRepository;
 import com.samitekce.sokdrycker.repository.UserRepository;
 
@@ -29,7 +26,7 @@ public class APIv1Controller {
 	// Find all products
 	@GetMapping(value = "/product", params = { "apikey" })
 	public List<Product> allProducts(@RequestParam(value = "apikey", required = true) String apikey) {
-		if (userRepo.findByApikey(apikey).getUserStatus().equals("USER")) {
+		if (userRepo.findByApikey(apikey).getRole().equals("USER")) {
 			return proRepo.findAll();
 		}
 
@@ -40,7 +37,7 @@ public class APIv1Controller {
 	@GetMapping(value = "/product", params = { "apikey", "order" })
 	public List<Product> findProductsByOrder(@RequestParam(value = "order", required = false) String order,
 			@RequestParam(value = "apikey", required = true) String apikey) {
-		if (userRepo.findByApikey(apikey).getUserStatus().equals("USER")) {
+		if (userRepo.findByApikey(apikey).getRole().equals("USER")) {
 
 			if (!order.equals("")) {
 				return proRepo.findAll((Sort.by(Sort.Direction.ASC, order)));
@@ -62,7 +59,7 @@ public class APIv1Controller {
 	public List<Product> findProductsByEcode(@RequestParam(value = "ecode", required = false) String ecode,
 			@RequestParam(value = "contains", required = false) Boolean contains,
 			@RequestParam(value = "apikey", required = true) String apikey) {
-		if (userRepo.findByApikey(apikey).getUserStatus().equals("USER")) {
+		if (userRepo.findByApikey(apikey).getRole().equals("USER")) {
 			if (contains) {
 				return proRepo.findProductsByKeepsEcodesCode(ecode);
 			}
@@ -86,7 +83,7 @@ public class APIv1Controller {
 			@RequestParam(value = "contains", required = true) Boolean contains,
 			@RequestParam(value = "order", required = true) String order,
 			@RequestParam(value = "apikey", required = true) String apikey) {
-		if (userRepo.findByApikey(apikey).getUserStatus().equals("USER")) {
+		if (userRepo.findByApikey(apikey).getRole().equals("USER")) {
 			if (order != null && contains) {
 				return proRepo.findProductsByKeepsEcodesCode(ecode, (Sort.by(Sort.Direction.ASC, order)));
 			}
@@ -106,7 +103,7 @@ public class APIv1Controller {
 	@GetMapping(value = "/product", params = { "apikey", "sugar" })
 	public List<Product> findProductsLessThanSugar(@RequestParam(value = "sugar", required = false) double amount,
 			@RequestParam(value = "apikey", required = true) String apikey) {
-		if (userRepo.findByApikey(apikey).getUserStatus().equals("USER")) {
+		if (userRepo.findByApikey(apikey).getRole().equals("USER")) {
 			return proRepo.sugarIsLessThanEqualOrderBySugar(amount);
 		}
 		return null;
