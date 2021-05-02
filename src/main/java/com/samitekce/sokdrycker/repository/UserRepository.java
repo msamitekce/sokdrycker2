@@ -14,6 +14,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
 	User findByApikey(String apikey);
 
-	List<User> findUserByApikey(String level);
+	User findUserByApikey(String apikey);
 	
 }
