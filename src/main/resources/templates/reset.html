@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tags">
 <head>
 <title>SokDrycker | Search what you drink!</title>
 <!-- Compiled and minified CSS -->
@@ -16,20 +17,20 @@
 <body>
 	<div th:replace="fragments/general :: top_menu"></div>
 
+	<h2>Forgot your password?</h2>
+	<form th:action="@{register}" action="#" method="post">
+		<div class="input-field">
 
-	<div class="container">
-
-		<form th:action="@{/profile/edit-email}" method="post" action="#">
-			<div class="input-field">
-				<input id="email" name="email" type="text" class="validate">
-				<label for="email">New Email</label>
-			</div>
-
+			<input id="username" name="username" type="text"
+				th:field="*{}"> <label for="username">Email</label>
+		</div>
+		<div class="row center">
 			<button class="btn-large waves-effect waves-light" type="submit">
-				Save <i class="material-icons right">chevron_right</i>
+				Reset Password<i class="material-icons right">chevron_right</i>
 			</button>
-		</form>
-	</div>
+
+		</div>
+	</form>
 
 </body>
 </html>

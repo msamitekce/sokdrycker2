@@ -81,9 +81,9 @@ public class FrontProfileController {
 		return "redirect:/profile";
 	}
 
-	@GetMapping(value = "/signout")
+	@GetMapping(value = "/loggedout")
 	public String signoutAction() {
-		return "signout";
+		return "loggedout";
 	}
 
 }

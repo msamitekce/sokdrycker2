@@ -14,22 +14,13 @@
 
 </head>
 <body>
-	<div th:replace="fragments/general :: top_menu"></div>
-
-
-	<div class="container">
-
-		<form th:action="@{/profile/edit-email}" method="post" action="#">
-			<div class="input-field">
-				<input id="email" name="email" type="text" class="validate">
-				<label for="email">New Email</label>
-			</div>
-
-			<button class="btn-large waves-effect waves-light" type="submit">
-				Save <i class="material-icons right">chevron_right</i>
-			</button>
-		</form>
+	<div class="row">
+		<div class="col l8 offset-l2">
+			<h2>Something looks wrong...</h2>
+			
+			<h2>Be careful</h2>
+			<a href="/home">Go back to home</a>
+		</div>
 	</div>
-
 </body>
 </html>

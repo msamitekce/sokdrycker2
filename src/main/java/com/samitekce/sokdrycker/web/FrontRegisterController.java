@@ -30,12 +30,13 @@ public class FrontRegisterController {
 
 	BCryptPasswordEncoder password_hasher = new BCryptPasswordEncoder();
 	String serverName;
+
 	// Register page
 	@GetMapping("/register")
 	public String register(Model model, HttpServletRequest request) {
 		serverName = request.getServerName();
 		model.addAttribute("user", new User());
-		
+
 		return "register";
 	}
 
@@ -45,9 +46,22 @@ public class FrontRegisterController {
 		user.setRole("NOTVALID");
 		user.setApikey();
 		userRepo.save(user);
-		sendEmail("msamitekce@gmail.com", user);
+//		sendEmail("msamitekce@gmail.com", user);
 		return "redirect:/";
 	}
+	
+	// Error
+	@GetMapping(value= "/error")
+	public String errorPage() {
+		return "error";
+	}
+	
+	// Forgot password
+	@GetMapping(value = "/reset")
+	public String resetPassword() {
+		return "reset";
+	}
+	
 	
 	// Verify
 	@GetMapping(value = "/verify/{apikey}")
@@ -55,7 +69,7 @@ public class FrontRegisterController {
 		User user = userRepo.findUserByApikey(apikey);
 		user.setRole("USER");
 		userRepo.save(user);
-		return "Success...";
+		return "verified";
 	}
 
 	@Value("${app.email.host}")
@@ -70,7 +84,7 @@ public class FrontRegisterController {
 	@Value("${app.email.port}")
 	private int SMTP_HOST_PORT;
 
-	@Value("${app.email.from}") 
+	@Value("${app.email.from}")
 	private String FROM;
 
 	public void sendEmail(String toMailAddress, User user) throws MessagingException {
@@ -90,8 +104,10 @@ public class FrontRegisterController {
 		MimeMessage message = new MimeMessage(mailSession);
 
 		message.setSubject("New Registery SokDrycker");
-		message.setContent("Hello" + user.getUsername() + "you have registered to Sokdrycker <br>"
-				+ "Click this link to verify your registery: <a href=\""+ serverName +"/verify/"+ user.getApikey() +"\">Verify</a>", "text/html");
+		message.setContent("Hello <b>" + user.getUsername() + "</b> you have registered to Sokdrycker <br>"
+				+ "Your email address is: " + user.getEmail()
+				+ "<br> Click this link to verify your registery: <a href=\"" + serverName + "/verify/"
+				+ user.getApikey() + "\">Verify</a>", "text/html");
 		message.setSentDate(new Date());
 		message.setFrom(new InternetAddress(FROM));
 		message.setRecipient(Message.RecipientType.TO, new InternetAddress(TO));

@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.samitekce.sokdrycker.web.UserDetailServiceImpl;
 
@@ -20,14 +21,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/css/**", "/js/**", "/register").permitAll() // Enable css when
-																								// logged out
-				.antMatchers("/api/").permitAll()
-				.and().authorizeRequests().anyRequest().authenticated()
+		http
+		.authorizeRequests().antMatchers("/", "/register", "/reset", "/verify/**","/api/**").permitAll() 																					
 				.and()
-				.formLogin().loginPage("/").defaultSuccessUrl("/home", true).permitAll()
-				.and().logout().permitAll()
-				.logoutUrl("/signout");
+		.authorizeRequests().anyRequest().hasAnyAuthority("USER", "ADMIN")
+				.and()
+		.formLogin()
+			.loginPage("/")
+			.defaultSuccessUrl("/home", true)
+				.and()
+		.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/loggedout");
 	}
 
 	@Autowired
