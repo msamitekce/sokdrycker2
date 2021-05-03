@@ -15,6 +15,11 @@ Main goals were:
 
 ### Note: 
 
+For testing you can use  
+username : sami  
+password : sami
+
+
 Currently email service is limited to my own email addresses therefor I recieve all registery emails.  
 But you can verify your account by following steps:  
 
@@ -107,10 +112,7 @@ http://13.51.108.218/adv/user/{id}
 ```
 http://13.51.108.218/adv/ecode
 ```
-### Find all ecodes
-```
-http://13.51.108.218/adv/ecode
-```
+
 ### Find an ecode by code
 ```
 http://13.51.108.218/adv/ecode/{code}
