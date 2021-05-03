@@ -8,7 +8,7 @@ Main goals were:
 - a RESTful application
 - having email verification at registery
 - having different level of users
-- creating API keys to use data on other applications
+- creating very basic API keys to use data on other applications and restrict access
 - practice Thymeleaf
 - combining multiple search parameters
 - deploying the application to AWS EC2
