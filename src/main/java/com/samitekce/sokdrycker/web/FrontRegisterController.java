@@ -46,23 +46,22 @@ public class FrontRegisterController {
 		user.setRole("NOTVALID");
 		user.setApikey();
 		userRepo.save(user);
-//		sendEmail("msamitekce@gmail.com", user);
+		sendEmail("msamitekce@gmail.com", user);
 		return "redirect:/";
 	}
-	
+
 	// Error
-	@GetMapping(value= "/error")
+	@GetMapping(value = "/error")
 	public String errorPage() {
 		return "error";
 	}
-	
+
 	// Forgot password
 	@GetMapping(value = "/reset")
 	public String resetPassword() {
 		return "reset";
 	}
-	
-	
+
 	// Verify
 	@GetMapping(value = "/verify/{apikey}")
 	public String verify(@PathVariable("apikey") String apikey) {
